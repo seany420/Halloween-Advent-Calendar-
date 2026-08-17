@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0d0a0e">
+<title>THE THINNING: 61 Nights, September 1 to Halloween</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rye&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --void:#0d0a0e;
+    --lamp:#171220;
+    --lamp2:#1e1728;
+    --bone:#e9dfc8;
+    --dust:#7a6f86;
+    --wheat:#c9a227;
+    --marigold:#e8891c;
+    --ember:#b33a2b;
+    --witch:#8fa05a;
+    --disp:'Rye', Georgia, serif;
+    --body:'Crimson Text', Georgia, serif;
+    --mono:'IBM Plex Mono', ui-monospace, monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    background:
+      radial-gradient(ellipse 130% 55% at 50% -8%, rgba(201,162,39,.07), transparent 62%),
+      radial-gradient(ellipse 90% 45% at 50% 108%, rgba(179,58,43,.07), transparent 62%),
+      var(--void);
+    color:var(--bone);
+    font-family:var(--body);
+    font-size:17px;line-height:1.55;
+    min-height:100vh;padding-bottom:70px;
+  }
+  ::selection{background:rgba(232,137,28,.3)}
+
+  header{text-align:center;padding:36px 16px 6px}
+  .moon{
+    background:none;border:none;cursor:pointer;font-size:32px;line-height:1;
+    filter:drop-shadow(0 0 12px rgba(233,223,200,.3));
+    transition:transform .15s ease;-webkit-tap-highlight-color:transparent;
+  }
+  .moon:active{transform:scale(.88)}
+  .moon:focus-visible{outline:2px solid var(--marigold);outline-offset:4px;border-radius:50%}
+  h1{
+    font-family:var(--disp);font-weight:400;
+    font-size:clamp(32px,8.5vw,62px);letter-spacing:.05em;
+    color:var(--marigold);text-shadow:0 0 30px rgba(232,137,28,.22);margin-top:6px;
+  }
+  .sub{color:var(--dust);font-style:italic;font-size:15px;margin-top:2px}
+  .counters{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:14px}
+  .pill{
+    font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+    border:1px solid rgba(233,223,200,.2);border-radius:2px;padding:5px 12px;color:var(--dust);
+  }
+  .pill b{color:var(--marigold);font-weight:500}
+  .bar{max-width:320px;height:2px;margin:14px auto 0;background:rgba(233,223,200,.12);position:relative}
+  .bar i{position:absolute;inset:0 auto 0 0;background:linear-gradient(90deg,var(--wheat),var(--ember));transition:width .4s ease}
+
+  .tonight-card{
+    max-width:640px;margin:22px auto 0;padding:16px 18px;
+    background:linear-gradient(150deg,rgba(232,137,28,.09),transparent 70%),var(--lamp);
+    border:1px solid var(--acc,rgba(232,137,28,.42));border-radius:4px;
+    text-align:left;cursor:pointer;width:calc(100% - 28px);
+    font-family:var(--body);color:var(--bone);display:block;
+  }
+  .tonight-card:focus-visible{outline:2px solid var(--marigold);outline-offset:3px}
+  .tonight-card .k{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--witch)}
+  .tonight-card .t{display:block;font-family:var(--disp);font-size:clamp(19px,5vw,26px);color:var(--marigold);margin-top:5px;line-height:1.2}
+  .tonight-card .d{display:block;color:var(--dust);font-style:italic;font-size:14.5px;margin-top:3px}
+
+  main{max-width:900px;margin:0 auto;padding:6px 14px}
+  .month-rule{display:flex;align-items:center;gap:14px;margin:38px 0 4px}
+  .month-rule span{font-family:var(--disp);font-size:15px;letter-spacing:.28em;color:var(--bone);white-space:nowrap}
+  .month-rule:before,.month-rule:after{content:'';height:1px;flex:1;background:linear-gradient(90deg,transparent,rgba(233,223,200,.25),transparent)}
+  .chapter{margin-top:28px}
+  .chapter-head{border-bottom:1px solid rgba(233,223,200,.13);padding-bottom:7px;margin-bottom:13px}
+  .chapter-range{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--acc)}
+  .chapter-title{font-family:var(--disp);font-weight:400;font-size:clamp(17px,4.4vw,23px);letter-spacing:.04em;display:block;margin-top:3px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(78px,1fr));gap:9px}
+
+  .door{
+    position:relative;aspect-ratio:3/4;
+    background:linear-gradient(158deg,rgba(233,223,200,.05),rgba(0,0,0,0) 58%),var(--lamp);
+    border:1px solid rgba(233,223,200,.17);border-radius:3px;
+    color:var(--bone);font-family:var(--body);cursor:pointer;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;padding:5px;
+    transition:transform .12s ease,border-color .2s,box-shadow .2s;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .door:before,.door:after{
+    content:'';position:absolute;top:50%;width:9px;height:9px;border-radius:50%;
+    background:var(--void);transform:translateY(-50%);border:1px solid rgba(233,223,200,.17);
+  }
+  .door:before{left:-5.5px}
+  .door:after{right:-5.5px}
+  .door .dt{font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;color:var(--dust)}
+  .door .num{font-family:var(--disp);font-size:21px;line-height:1;color:var(--acc)}
+  .door .tag{font-size:10px;line-height:1.2;text-align:center;color:var(--dust);overflow:hidden;max-height:2.5em;padding:0 1px}
+  .door:focus-visible{outline:2px solid var(--marigold);outline-offset:2px}
+  .door.locked{cursor:not-allowed;opacity:.42}
+  .door.locked .num{color:var(--dust)}
+  .door.open:hover{transform:translateY(-3px);border-color:var(--acc)}
+  .door.marked{border-color:rgba(143,160,90,.5)}
+  .door .sig{position:absolute;top:4px;left:5px;font-size:10px;color:var(--witch)}
+  .door .stamp{position:absolute;top:3px;right:4px;font-size:12px;transform:rotate(12deg)}
+  .door.tonight{
+    border-color:var(--marigold);
+    box-shadow:0 0 18px rgba(232,137,28,.35),inset 0 0 14px rgba(232,137,28,.12);
+    animation:flicker 3.4s ease-in-out infinite;
+  }
+  @keyframes flicker{
+    0%,100%{box-shadow:0 0 18px rgba(232,137,28,.35),inset 0 0 14px rgba(232,137,28,.12)}
+    47%{box-shadow:0 0 27px rgba(232,137,28,.5),inset 0 0 18px rgba(232,137,28,.18)}
+    53%{box-shadow:0 0 13px rgba(232,137,28,.26),inset 0 0 9px rgba(232,137,28,.08)}
+  }
+  .door.shake{animation:shake .3s ease}
+  @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+  @media (prefers-reduced-motion:reduce){.door.tonight,.door.shake{animation:none}*{transition:none!important}}
+
+  .veil{position:fixed;inset:0;background:rgba(8,6,10,.85);backdrop-filter:blur(3px);display:none;align-items:flex-end;justify-content:center;z-index:50}
+  .veil.show{display:flex}
+  .card{
+    width:100%;max-width:580px;max-height:90vh;overflow-y:auto;
+    background:linear-gradient(180deg,rgba(232,137,28,.06),transparent 26%),var(--lamp);
+    border:1px solid var(--acc,rgba(232,137,28,.4));border-bottom:none;border-radius:12px 12px 0 0;
+    padding:24px 22px 32px;animation:rise .25s ease;
+  }
+  @keyframes rise{from{transform:translateY(40px);opacity:0}to{transform:none;opacity:1}}
+  @media(min-width:640px){.veil{align-items:center;padding:24px}.card{border-radius:5px;border-bottom:1px solid var(--acc,rgba(232,137,28,.4))}}
+  .kicker{font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--acc);margin-bottom:7px}
+  .card h2{font-family:var(--disp);font-weight:400;font-size:clamp(23px,6vw,32px);color:var(--marigold);line-height:1.14}
+  .credits{color:var(--dust);font-style:italic;font-size:15px;margin-top:4px}
+  .rule{height:1px;margin:15px 0;background:linear-gradient(90deg,transparent,rgba(233,223,200,.28),transparent)}
+  .label{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--ember);margin-bottom:7px}
+  .label.green{color:var(--witch)}
+  .lore{font-size:16.5px}
+  .almanac{margin:14px 0 0;padding:12px 14px;border-left:2px solid var(--witch);background:rgba(143,160,90,.07);font-size:15.5px}
+  .alt{margin-top:16px;font-size:15px}
+  .alt em{color:var(--dust)}
+  textarea{
+    width:100%;margin-top:8px;min-height:66px;resize:vertical;
+    background:var(--void);color:var(--bone);border:1px solid rgba(233,223,200,.2);border-radius:3px;
+    padding:9px 10px;font-family:var(--body);font-size:15.5px;
+  }
+  textarea:focus{outline:none;border-color:var(--marigold)}
+  .actions{display:flex;gap:9px;margin-top:20px}
+  .btn{
+    flex:1;padding:12px;font-family:var(--body);font-size:15px;letter-spacing:.04em;
+    background:transparent;color:var(--bone);border:1px solid rgba(233,223,200,.32);border-radius:3px;cursor:pointer;
+    transition:border-color .2s,background .2s,color .2s;
+  }
+  .btn:hover{border-color:var(--marigold)}
+  .btn:focus-visible{outline:2px solid var(--marigold);outline-offset:2px}
+  .btn.primary{border-color:var(--marigold);color:var(--marigold)}
+  .btn.primary.done{background:rgba(143,160,90,.13);border-color:var(--witch);color:var(--witch)}
+
+  .ritual-card{max-width:400px;text-align:center}
+  .ritual-card p{color:var(--dust);font-style:italic;margin-top:6px;font-size:15px}
+  .ritual-card input{
+    width:100%;margin-top:16px;padding:12px;background:var(--void);color:var(--marigold);
+    border:1px solid rgba(232,137,28,.4);border-radius:3px;
+    font-family:var(--disp);font-size:19px;letter-spacing:.28em;text-align:center;text-transform:uppercase;
+  }
+  .ritual-card input:focus{outline:none;border-color:var(--marigold)}
+  .ritual-card .hint{font-family:var(--mono);font-size:11px;letter-spacing:.06em;margin-top:10px;color:var(--dust)}
+
+  footer{text-align:center;margin-top:46px;color:var(--dust);font-size:13px;font-style:italic;padding:0 20px}
+  .toast{
+    position:fixed;left:50%;bottom:20px;transform:translateX(-50%);
+    background:var(--lamp2);color:var(--bone);border:1px solid rgba(232,137,28,.5);border-radius:3px;
+    padding:10px 18px;font-size:14.5px;opacity:0;pointer-events:none;transition:opacity .3s;z-index:60;
+    max-width:88vw;text-align:center;
+  }
+  .toast.show{opacity:1}
+</style>
+</head>
+<body>
+
+<header>
+  <button class="moon" id="moon" aria-label="The moon">🌕</button>
+  <h1>THE THINNING</h1>
+  <div class="sub">61 nights from the harvest to Halloween. One film a night, and the true thing underneath it.</div>
+  <div class="counters">
+    <span class="pill" id="pillVeil"></span>
+    <span class="pill" id="pillSeen"></span>
+  </div>
+  <div class="bar"><i id="barFill" style="width:0"></i></div>
+  <button class="tonight-card" id="tonightCard" hidden></button>
+</header>
+
+<main id="main"></main>
+
+<footer>The moon keeps its own hours. The old rules apply.</footer>
+
+<div class="veil" id="veil" role="dialog" aria-modal="true" aria-labelledby="cardTitle">
+  <div class="card" id="cardBox">
+    <div class="kicker" id="cardKicker"></div>
+    <h2 id="cardTitle"></h2>
+    <div class="credits" id="cardCredits"></div>
+    <div class="almanac" id="cardAlmanac" hidden></div>
+    <div class="rule"></div>
+    <div class="label">Why tonight</div>
+    <div class="lore" id="cardLore"></div>
+    <div class="alt" id="cardAlt"></div>
+    <div class="rule"></div>
+    <div class="label green">Your notes</div>
+    <textarea id="cardNotes" placeholder="What it did to you."></textarea>
+    <div class="actions">
+      <button class="btn" id="closeBtn">Close the door</button>
+      <button class="btn primary" id="watchBtn">Mark watched</button>
+    </div>
+  </div>
+</div>
+
+<div class="veil" id="ritualVeil" role="dialog" aria-modal="true" aria-labelledby="ritualTitle">
+  <div class="card ritual-card">
+    <div class="kicker" style="color:var(--witch)">The moon has noticed you</div>
+    <h2 id="ritualTitle">Speak the Old Name</h2>
+    <p>Say it correctly and every door opens, whatever the calendar says. The calendar was always a formality.</p>
+    <input type="text" id="ritualInput" autocomplete="off" autocapitalize="characters" aria-label="Speak the old name">
+    <div class="hint">The Celts had a word for the night the year turns.</div>
+    <div class="actions">
+      <button class="btn" id="ritualClose">Retreat</button>
+      <button class="btn primary" id="ritualSpeak">Speak</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const CH=[
+ {id:0,m:'SEPTEMBER',range:'Sept 1 – 6',   title:'The Harvest King',              acc:'#c9a227'},
+ {id:1,m:'SEPTEMBER',range:'Sept 7 – 12',  title:'The Old Gods Keep Their Hours', acc:'#bda12c'},
+ {id:2,m:'SEPTEMBER',range:'Sept 13 – 19', title:'The Burning Times',             acc:'#b09636'},
+ {id:3,m:'SEPTEMBER',range:'Sept 20 – 24', title:'Blood and the Bargain',         acc:'#c08a3a'},
+ {id:4,m:'SEPTEMBER',range:'Sept 25 – 30', title:'The Dead Don\u2019t Stay Buried',acc:'#d4802c'},
+ {id:5,m:'OCTOBER',  range:'Oct 1 – 6',    title:'Rapping on the Table',          acc:'#e8891c'},
+ {id:6,m:'OCTOBER',  range:'Oct 7 – 12',   title:'The House Remembers',           acc:'#e07826'},
+ {id:7,m:'OCTOBER',  range:'Oct 13 – 18',  title:'The Devil in America',          acc:'#d4622c'},
+ {id:8,m:'OCTOBER',  range:'Oct 19 – 24',  title:'Told Around a Fire',            acc:'#c85030'},
+ {id:9,m:'OCTOBER',  range:'Oct 25 – 30',  title:'Masks, Candy, and the Dark',    acc:'#bd442e'},
+ {id:10,m:'OCTOBER', range:'Oct 31',       title:'The Night He Came Home',        acc:'#b33a2b'}
+];
+
+const N=[
+{n:1,m:9,d:1,c:0,f:'Children of the Corn',y:1984,dir:'Fritz Kiersch',co:'USA',
+ lore:'The grain gets murdered every autumn and everybody throws a party about it. "John Barleycorn" is a real ballad, sung in England for centuries, where the barley is beaten, cut, buried, and comes back as beer. James Frazer collected the customs behind it in "The Golden Bough" (1890): the last sheaf of the field tied into a figure, carried home, kept all winter, handled like a captured spirit. Folklorists have since dismantled most of Frazer\u2019s sacrificed-king theory. Every folk horror film you\u2019ll watch this season got built on it anyway.',
+ alt:'Jug Face (2013)'},
+{n:2,m:9,d:2,c:0,f:'Dark Night of the Scarecrow',y:1981,dir:'Frank De Felitta',co:'USA',
+ lore:'Scarecrows started out as boys. Medieval English farms hired bird-scarers, children who walked the rows from first light clapping and shouting. After plague thinned the labor supply, farmers stuffed clothes with straw and stood them up instead. A body-shaped thing doing a person\u2019s job, alone in a field all night, is the whole movie before anybody says a word.',
+ alt:'Scarecrows (1988)'},
+{n:3,m:9,d:3,c:0,f:'The Wicker Man',y:1973,dir:'Robin Hardy',co:'UK',
+ lore:'Caesar wrote in the Gallic War that the Gauls burned people alive inside enormous wicker figures. He was describing a people he was in the middle of conquering, and no archaeology has ever supported him. What the archaeology did produce: Lindow Man, pulled out of a Cheshire bog, killed roughly 2,000 years ago by a blow to the skull, a garrote, and a cut throat, in that order. The wicker giant is probably propaganda. The deliberate killing was real.',
+ alt:'Apostle (2018)'},
+{n:4,m:9,d:4,c:0,f:'The Blood on Satan\u2019s Claw',y:1971,dir:'Piers Haggard',co:'UK',
+ lore:'It opens with a plow turning up a skull, which is the most historically plausible thing in it. English fields and cottages are full of objects people buried on purpose: witch bottles packed with urine, bent pins, and nail clippings, sealed under thresholds and hearths to throw a curse back at whoever sent it. Hundreds have been excavated. Mummified cats got walled in too. The ground holds other people\u2019s fear, placed there deliberately.',
+ alt:'Eyes of Fire (1983)'},
+{n:5,m:9,d:5,c:0,f:'A Field in England',y:2013,dir:'Ben Wheatley',co:'UK',
+ lore:'The English Civil War made magic a growth industry. William Lilly\u2019s astrological almanacs sold in the tens of thousands, and both armies consulted stargazers before they moved. Treasure hunting had a documented procedure: a magician, a scryer to look into the glass (often a child, thought to be purer), a circle for protection, and a spirit compelled to point. Wheatley films that procedure close to how the period manuals lay it out.',
+ alt:'In the Earth (2021)'},
+{n:6,m:9,d:6,c:0,f:'Midsommar',y:2019,dir:'Ari Aster',co:'USA / Sweden',
+ lore:'Adam of Bremen wrote around 1070 that every ninth year at Uppsala the Swedes hanged nine males of every kind, dogs and horses and men, in a sacred grove. He was a German churchman describing pagans he never visited, so historians handle him with tongs. The Hårga legend, the runic script, the painted ritual house: that came out of genuine Swedish material. The commune\u2019s calendar is invented. The instinct to build a calendar out of deaths is not.',
+ alt:'Lamb (2021)'},
+
+{n:7,m:9,d:7,c:1,f:'Kill List',y:2011,dir:'Ben Wheatley',co:'UK',
+ lore:'Masked customs never actually died in England. The Straw Bear of Whittlesey walks in January covered head to foot in twisted straw. Padstow\u2019s Obby Oss goes out every May Day and has for as long as anyone can document. The Mari Lwyd, a horse skull on a pole under a white sheet, still knocks on Welsh doors at midwinter and demands entry in rhymed insults. Wheatley didn\u2019t invent the hoods. He declined to explain them.',
+ alt:'In Fabric (2018)'},
+{n:8,m:9,d:8,c:1,f:'The Ritual',y:2017,dir:'David Bruckner',co:'UK',
+ lore:'Norse cursing had a formal procedure. The níðstang was a horse\u2019s head mounted on a pole, aimed at an enemy\u2019s land with an insult carved in runes. It appears in Egil\u2019s Saga and it has gone up in Iceland recently enough to make the news. Offerings hung in trees show up in the sagas and in the dig sites both. The thing in these woods wants worship, which is the correct ask.',
+ alt:'Border (2018)'},
+{n:9,m:9,d:9,c:1,f:'Whistle and I\u2019ll Come to You',y:1968,dir:'Jonathan Miller',co:'UK',
+ lore:'M.R. James was a Cambridge provost and a working medievalist, and he wrote ghost stories to read aloud to friends by candlelight at Christmas. The dark half of the year has always been the storytelling half. His rules: put an ordinary scholar somewhere pleasant, let him disturb an old object, then bring the horror in daylight, in a familiar room, to a man who has earned it just slightly.',
+ alt:'The Signalman (1976)'},
+{n:10,m:9,d:10,c:1,f:'Viy',y:1967,dir:'K. Yershov & G. Kropachyov',co:'USSR',
+ lore:'The chalk circle is real magical technology. Grimoires from the Key of Solomon down to cheap 19th-century print all agree on it: draw it, name it, and do not step outside before dawn no matter what walks in. Gogol claimed Viy came out of Ukrainian folk tale and gave the demon a name plus eyelids that need lifting. Folklorists have never found him anywhere except in Gogol, which makes this the rare monster with a birth certificate.',
+ alt:'Valerie and Her Week of Wonders (1970)'},
+{n:11,m:9,d:11,c:1,f:'The Wailing',y:2016,dir:'Na Hong-jin',co:'South Korea',
+ lore:'Korean shamanism is a living practice, not a museum wing. Mudang, mostly women, still perform gut rituals for illness, business trouble, bad luck, and the dead, and Na choreographed the exorcism sequence with practitioners. Watch what the ritual costs the man who commissioned it. The film\u2019s real subject is a father deciding under time pressure which stranger to believe.',
+ alt:'A Tale of Two Sisters (2003)'},
+{n:12,m:9,d:12,c:1,f:'Impetigore',y:2019,dir:'Joko Anwar',co:'Indonesia',
+ lore:'Wayang kulit shadow puppets are cut from buffalo hide and worked by one dalang who voices every character, sometimes straight through until sunrise. The performance is entertainment and rite at the same time, staged to cleanse a village or mark a birth. Anwar takes the skin part of the tradition literally, then builds a curse around who a village is willing to sacrifice to keep itself intact.',
+ alt:'Satan\u2019s Slaves (2017)'},
+
+{n:13,m:9,d:13,c:2,f:'Häxan',y:1922,dir:'Benjamin Christensen',co:'Sweden / Denmark',
+ lore:'The Malleus Maleficarum (1486) was a how-to manual, and the printing press turned it into a European bestseller. Christensen built his film from trial transcripts and inquisitors\u2019 handbooks, then put on the horns and played the Devil himself. The witch on the broomstick in your window display is a direct descendant of confessions taken from old women under torture. She was a legal artifact before she was a decoration.',
+ alt:'Season of the Witch (1972)'},
+{n:14,m:9,d:14,c:2,f:'The Witch',y:2015,dir:'Robert Eggers',co:'USA / Canada',
+ lore:'Eggers assembled the dialogue out of 17th-century diaries, pamphlets, and court records, so the accusations in the film are the accusations in the archive. At Salem in 1692 the court accepted spectral evidence: your shape appearing in somebody else\u2019s dream counted against you, and there is no defense against a dream. Nineteen people hanged. Eggers mostly just read the archive out loud.',
+ alt:'Hagazussa (2017)'},
+{n:15,m:9,d:15,c:2,f:'Day of Wrath',y:1943,dir:'Carl Th. Dreyer',co:'Denmark',
+ lore:'Dreyer made a witch-trial picture under German occupation, about a village where the safest move is to accuse your neighbor before they accuse you. Danish courts burned real people through the 1600s and the procedure here is period-accurate down to the ladder. He left for Sweden shortly after it opened. Nobody in the audience needed the allegory explained.',
+ alt:'Mother Joan of the Angels (1961)'},
+{n:16,m:9,d:16,c:2,f:'The Devils',y:1971,dir:'Ken Russell',co:'UK',
+ lore:'Loudun, France, 1634. A convent of Ursulines reported possession, the exorcisms were staged in public as popular entertainment with paying spectators, and Urbain Grandier was burned alive after a trial that had far more to do with Richelieu and the town walls than with demons. Aldous Huxley wrote the history. Russell filmed it and got it cut on three continents.',
+ alt:'The Crucible (1996)'},
+{n:17,m:9,d:17,c:2,f:'Black Sunday',y:1960,dir:'Mario Bava',co:'Italy',
+ lore:'The mask of nails hammered onto Barbara Steele is invention, and so is most of what you picture when you picture a torture museum. The iron maiden is essentially a 19th-century fabrication, assembled for exhibitions and sold to a public that wanted the Middle Ages to be worse than it was. Actual interrogation was duller and more effective: sleep deprivation, pricking for insensitive skin, water. Bava\u2019s fog is better than the truth, and the truth is why the fog works.',
+ alt:'Kill, Baby... Kill! (1966)'},
+{n:18,m:9,d:18,c:2,f:'Witchfinder General',y:1968,dir:'Michael Reeves',co:'UK',
+ lore:'Matthew Hopkins was a nobody from the Essex coast who, in about three years, drove roughly 100 executions, possibly a quarter of every witch killing in English history. Higher counts of 230 or more circulate and the records are genuinely a mess. Parliament never granted him the title he printed on his pamphlet. Torture was already illegal in England, so he kept the accused awake for days instead, which the film gets exactly right. He died in bed of consumption around 27.',
+ alt:'The Crucible (1996), if you want the same machine running in Massachusetts'},
+{n:19,m:9,d:19,c:2,f:'The Autopsy of Jane Doe',y:2016,dir:'André Øvredal',co:'UK',
+ mark:'On this date in 1692, Giles Corey was crushed to death in a Salem field. He refused to enter a plea, so the court applied peine forte et dure: a board, then stones, added over two days. Dying without a plea kept his estate with his family instead of the court. He is reported to have asked for more weight.',
+ lore:'This is a film about a body from that era finally getting examined by people with instruments and good lighting. Everything done to her was done to extract a confession, and every finding on the table is a record of somebody\u2019s procedure. What a witch trial leaves behind is a body full of evidence about the people who made it.',
+ alt:'Possum (2018)'},
+
+{n:20,m:9,d:20,c:3,f:'Nosferatu',y:1922,dir:'F.W. Murnau',co:'Germany',
+ lore:'New England had a vampire panic and it was tuberculosis. When a family kept dying, relatives exhumed the first one buried, checked the heart for liquid blood, and burned it. Mercy Brown was dug up in Exeter, Rhode Island in 1892, five years before Stoker published. Murnau adapted Dracula without permission, Florence Stoker won a court order to destroy every print, and one survived anyway.',
+ alt:'Vampyr (1932)'},
+{n:21,m:9,d:21,c:3,f:'Let the Right One In',y:2008,dir:'Tomas Alfredson',co:'Sweden',
+ lore:'The invitation rule runs all through European folklore, and the older idea under it is that a threshold is a genuine boundary you can fortify. People buried charms under doorsteps, nailed iron over lintels, carried brides across. Greek villages exhumed the vrykolakas and burned it on an island, off the home ground entirely. The vampire\u2019s manners are a surviving piece of a real architecture of fear.',
+ alt:'Thirst (2009)'},
+{n:22,m:9,d:22,c:3,f:'The Company of Wolves',y:1984,dir:'Neil Jordan',co:'UK',
+ mark:'Autumnal equinox, near enough. Equal day, equal night, and after tonight the dark takes the lead and holds it until March. Half the harvest festivals in Europe cluster here for exactly that reason.',
+ lore:'Angela Carter wrote the source stories out of the oral versions of Little Red Riding Hood, which are older and considerably stranger than Perrault\u2019s. In some the girl eats what the wolf offers her. In most she gets out of the bed by her own cunning with nobody arriving to save her. The moral about staying on the path was added by the men who wrote the tales down.',
+ alt:'Ginger Snaps (2000)'},
+{n:23,m:9,d:23,c:3,f:'An American Werewolf in London',y:1981,dir:'John Landis',co:'USA / UK',
+ lore:'European courts tried men as werewolves and executed them. Peter Stumpp was killed at Bedburg in 1589 after confessing, under torture, that a belt from the Devil let him change shape. That confession is a legal document sitting in an archive. Landis plays the curse for laughs right up to the second it stops being funny, which is also how the folklore works.',
+ alt:'Wolfen (1981)'},
+{n:24,m:9,d:24,c:3,f:'Ganja & Hess',y:1973,dir:'Bill Gunn',co:'USA',
+ lore:'Gunn was hired to deliver a Blacula follow-up and turned in a film about addiction, class, faith, and the cost of assimilation, with the infection arriving through an ancient Myrthian blade. The distributor recut it into something called Blood Couple and the original was nearly lost. Spike Lee remade it in 2014, which is one way of conceding Gunn was right.',
+ alt:'Def by Temptation (1990)'},
+
+{n:25,m:9,d:25,c:4,f:'The Others',y:2001,dir:'Alejandro Amenábar',co:'Spain / USA',
+ lore:'Victorians photographed their dead. The body was washed, dressed, posed, occasionally propped upright with a stand, and for a lot of families that was the only image they would ever own of that person. Photography was expensive and grief was the occasion that justified the expense. The book of the dead Grace finds is a real genre with real surviving examples. Those portraits unsettle us because the people who made them were not unsettled at all.',
+ alt:'The Orphanage (2007)'},
+{n:26,m:9,d:26,c:4,f:'Kwaidan',y:1964,dir:'Masaki Kobayashi',co:'Japan',
+ lore:'Lafcadio Hearn was born in Greece, raised in Ireland, worked as a crime reporter in Cincinnati and New Orleans, moved to Japan in 1890, married into a samurai family, took the name Koizumi Yakumo, and collected the stories this film adapts. Japan\u2019s night for the returning dead is Obon in August: lanterns lit to guide them home, then floated downriver to send them back out. The dead visit on a schedule. Ours just falls later in the year.',
+ alt:'Ugetsu (1953)'},
+{n:27,m:9,d:27,c:4,f:'Onibaba',y:1964,dir:'Kaneto Shindō',co:'Japan',
+ lore:'The hannya mask of Noh theater shows a woman whose jealousy carried her into demonhood, and a skilled actor changes its whole meaning by tilting it a few degrees toward or away from the light. Shindō built the film on a Buddhist parable about a mask that will not come off. The pit in the reeds is where a civil war goes when nobody is keeping records.',
+ alt:'Kuroneko (1968)'},
+{n:28,m:9,d:28,c:4,f:'The Devil\u2019s Backbone',y:2001,dir:'Guillermo del Toro',co:'Spain / Mexico',
+ lore:'Spain is still digging. Mass graves from the Civil War and the dictatorship are being exhumed and identified now, decades late, by families who spent their whole lives being told to keep quiet. Del Toro\u2019s definition of a ghost, a moment of pain repeating itself, an instant of agony stuck on a loop, is a thesis about a country that agreed to forget on purpose.',
+ alt:'The Spirit of the Beehive (1973)'},
+{n:29,m:9,d:29,c:4,f:'Angel Heart',y:1987,dir:'Alan Parker',co:'USA',
+ mark:'Michaelmas: the feast of the archangel who threw Satan out of heaven. Folk belief across Britain and Ireland holds that the Devil landed in a blackberry bush and spat on it, so you do not pick blackberries after today. Michaelmas also closed the harvest and opened the accounting year. It is the day debts come due.',
+ lore:'Parker\u2019s film is a debt coming due, and it is also a case study in Hollywood shooting vodou as horror for 60 straight years. The actual religion has a priesthood, a liturgy, and a moral structure, carried across the Atlantic in the holds of ships and disguised under Catholic saints so it would survive the crossing. The screaming chicken is the movies. The survival is the history.',
+ alt:'Eve\u2019s Bayou (1997)'},
+{n:30,m:9,d:30,c:4,f:'Carnival of Souls',y:1962,dir:'Herk Harvey',co:'USA',
+ lore:'Medieval churches painted the Danse Macabre on their walls: Death leading pope, plowman, merchant, and child in one line, everybody in step. It spread after plague made the point impossible to argue with. Harvey made industrial films in Kansas, shot this for around 30,000 dollars at Saltair, an abandoned pavilion on the Great Salt Lake, and turned the state of being in between into the monster. September ends here. Tomorrow the doors get louder.',
+ alt:'Messiah of Evil (1974)'},
+
+{n:31,m:10,d:1,c:5,f:'Lake Mungo',y:2008,dir:'Joel Anderson',co:'Australia',
+ lore:'William Mumler sold spirit photographs in the 1860s and 70s: faint figures standing behind grieving customers, Mary Todd Lincoln among them. He was tried for fraud, acquitted, and ruined anyway. The pictures worked because grief will develop whatever it needs to see, and Anderson built an entire film on that single mechanism. Watch the last shot twice.',
+ alt:'Kairo / Pulse (2001)'},
+{n:32,m:10,d:2,c:5,f:'The Changeling',y:1980,dir:'Peter Medak',co:'Canada',
+ lore:'Russell Hunter said all of this happened to him in a Denver house in the late 1960s, séance included. Whether you believe him is beside the point of what a séance is for. Since 1848 the medium\u2019s actual job has been letting the living finish a conversation death interrupted, and the profession survives every debunking because the need does.',
+ alt:'The Uninvited (1944)'},
+{n:33,m:10,d:3,c:5,f:'The Haunting',y:1963,dir:'Robert Wise',co:'UK / USA',
+ lore:'Modern spiritualism starts in a Hydesville farmhouse in 1848, where the Fox sisters produced knocks that answered questions and became famous on two continents. Forty years later Margaret confessed on a New York stage that she made them by cracking a toe joint, and demonstrated it live. The movement barely slowed. Wise understood the mechanism completely: a haunting needs a person who needs to be haunted, and Eleanor volunteers.',
+ alt:'House on Haunted Hill (1959)'},
+{n:34,m:10,d:4,c:5,f:'Séance on a Wet Afternoon',y:1964,dir:'Bryan Forbes',co:'UK',
+ lore:'Houdini spent his last years exposing mediums. He sat on a Scientific American committee that investigated "Margery" Crandon in 1924 and found the trick every time. He and his wife agreed on a coded phrase so she would know if a message ever really came through. He died on Halloween, 1926. She held a séance every year for ten years, then stopped and said ten years was long enough to wait for any man.',
+ alt:'Nightmare Alley (1947)'},
+{n:35,m:10,d:5,c:5,f:'The Legend of Hell House',y:1973,dir:'John Hough',co:'UK',
+ lore:'The Society for Psychical Research was founded in 1882 by Cambridge men who wanted to test the afterlife with instruments and controls. Harry Price took the idea and the publicity further at Borley Rectory in the 1930s, branding it the most haunted house in England. Later investigators concluded he manufactured a fair amount of it. The gear in this film is a period-accurate joke about people exactly like Price.',
+ alt:'The Stone Tape (1972)'},
+{n:36,m:10,d:6,c:5,f:'The Innocents',y:1961,dir:'Jack Clayton',co:'UK',
+ lore:'Henry James wrote "The Turn of the Screw" as a Christmas ghost story told at a fire, and refused for the rest of his life to say whether the ghosts were there. Victorian households handed their children to servants and then worried about it continuously, which is the anxiety the whole thing runs on. Clayton keeps both readings alive in the same frame and Freddie Francis lit it so you can never settle the argument.',
+ alt:'Don\u2019t Look Now (1973)'},
+
+{n:37,m:10,d:7,c:6,f:'The Shining',y:1980,dir:'Stanley Kubrick',co:'UK / USA',
+ lore:'King and his wife were the last guests of the season at the Stanley Hotel in Estes Park in 1974, ate dinner alone in an empty dining room with chairs stacked on the tables, and stayed in room 217. He had the novel in his head by morning. The film\u2019s one throwaway line about the hotel sitting on an Indian burial ground did more damage to American ghost-story logic than any other sentence in the genre.',
+ alt:'The Sentinel (1977)'},
+{n:38,m:10,d:8,c:6,f:'Burnt Offerings',y:1976,dir:'Dan Curtis',co:'USA',
+ lore:'The house that eats. Curtis, who made Dark Shadows, films a cheap summer rental as a slow feeding, and the chauffeur\u2019s grin came out of a nightmare he actually had. Houses want maintenance in folklore too: the hearth kept lit, the well fed, the cat sealed into the wall. This one skips the metaphor and collects directly.',
+ alt:'Let\u2019s Scare Jessica to Death (1971)'},
+{n:39,m:10,d:9,c:6,f:'Poltergeist',y:1982,dir:'Tobe Hooper',co:'USA',
+ lore:'"Built on a burial ground" became the American stock explanation for a haunting, and it quietly concedes whose land the subdivision is standing on. The production note that never gets less grim: the skeletons in the pool are real human remains, used because real ones were cheaper than manufactured props, and JoBeth Williams found out afterward. The suburb is haunted by its own supply chain.',
+ alt:'The Innkeepers (2011)'},
+{n:40,m:10,d:10,c:6,f:'The Amityville Horror',y:1979,dir:'Stuart Rosenberg',co:'USA',
+ lore:'Ronald DeFeo Jr. shot six members of his family in that Long Island house in November 1974. The Lutz family moved in thirteen months later and left after 28 days with a story that became a book, a film, and a franchise. DeFeo\u2019s own defense lawyer later said the three of them concocted it over several bottles of wine. The house is still standing. They changed the address. The tours never stopped.',
+ alt:'The Conjuring (2013)'},
+{n:41,m:10,d:11,c:6,f:'Session 9',y:2001,dir:'Brad Anderson',co:'USA',
+ lore:'They shot inside the actual Danvers State Hospital before demolition, and the building sits on Hathorne Hill, named for John Hathorne, the Salem judge who never once repented. His descendant Nathaniel added a w to the family name to get some distance from him. Danvers is a Kirkbride: enormous staggered wings, endless corridors, designed on the sincere theory that architecture could cure a mind. An asbestos crew is the correct cast for that idea.',
+ alt:'Hell House LLC (2015)'},
+{n:42,m:10,d:12,c:6,f:'His House',y:2020,dir:'Remi Weekes',co:'UK',
+ lore:'The apeth, a night witch out of South Sudanese story, follows the debt a person carries rather than the address. Weekes builds asylum housing into the haunting itself: the walls you are assigned, the rules you are handed, the demand that you look visibly grateful for both. Some hauntings stay with the property. This one packed.',
+ alt:'Atlantics (2019)'},
+
+{n:43,m:10,d:13,c:7,f:'Night of the Demon',y:1957,dir:'Jacques Tourneur',co:'UK',
+ mark:'On this date in 1307, Philip IV of France had every Knight Templar in the country arrested at dawn, tortured them into confessing to devil worship, and seized the order\u2019s money, which he happened to owe them. The Friday-the-13th superstition attached itself to that story much later, mostly in the 20th century.',
+ lore:'Tourneur adapts M.R. James\u2019s "Casting the Runes" and models his cult leader partly on Aleister Crowley, whom the British tabloids had crowned the wickedest man in the world. The counter-magic is the oldest rule on the books: a curse handed over on a slip of paper can be handed back, and the sender has to take delivery. Producers forced the monster into the final cut. Tourneur wanted you to never quite see it.',
+ alt:'The Devil Rides Out (1968)'},
+{n:44,m:10,d:14,c:7,f:'Rosemary\u2019s Baby',y:1968,dir:'Roman Polanski',co:'USA',
+ lore:'Anton LaVey founded the Church of Satan in San Francisco in 1966 and declared it Year One. That April, Time ran a black cover asking whether God was dead, and Polanski puts that exact issue in Rosemary\u2019s hands in a waiting room. The Devil did not sneak into late-60s America. He signed a lease on a good building and got the neighbors to help.',
+ alt:'Possession (1981)'},
+{n:45,m:10,d:15,c:7,f:'The Exorcist',y:1973,dir:'William Friedkin',co:'USA',
+ lore:'In 1949 a Maryland boy the papers called Roland Doe went through a months-long exorcism, most of it in St. Louis, and one of the priests kept a diary that became Blatty\u2019s source. The Catholic rite is still performed and dioceses still appoint exorcists. Requests spike after every popular film about it, which tells you where the demand actually comes from.',
+ alt:'The Exorcist III (1990)'},
+{n:46,m:10,d:16,c:7,f:'Hereditary',y:2018,dir:'Ari Aster',co:'USA',
+ lore:'King Paimon is catalogued. The Ars Goetia, part of a 17th-century compilation called the Lesser Key of Solomon, lists 72 spirits with their ranks, sigils, legions, and specialties, all supposedly bound by Solomon in a brass vessel. Aster lifted the cult\u2019s theology straight from the text. Grimoires were commercial products with print runs. Some things fail to stay buried because somebody keeps reprinting them.',
+ alt:'The Dark and the Wicked (2020)'},
+{n:47,m:10,d:17,c:7,f:'Late Night with the Devil',y:2023,dir:'Colin & Cameron Cairnes',co:'Australia',
+ lore:'The Satanic Panic ran on television. "Michelle Remembers" (1980) supplied the template, therapists spread it through recovered-memory work, and Geraldo Rivera\u2019s two-hour prime-time special in 1988 delivered it to tens of millions of American living rooms as established fact. He apologized years later, on air, once the convictions started getting overturned. A talk show is the correct setting for this story.',
+ alt:'Ghostwatch (1992)'},
+{n:48,m:10,d:18,c:7,f:'The House of the Devil',y:2009,dir:'Ti West',co:'USA',
+ lore:'The McMartin preschool case ran from 1983 to 1990, cost California something in the neighborhood of 15 million dollars, and ended with no convictions. Parents were taught to fear babysitters, day cares, heavy metal records, and Dungeons & Dragons, and the fear was manufactured largely by adults interviewing children badly. West shot on 16mm so the period would sit correctly in your eye. The tension belongs to the decade, not the plot.',
+ alt:'We Summon the Darkness (2019)'},
+
+{n:49,m:10,d:19,c:8,f:'Candyman',y:1992,dir:'Bernard Rose',co:'USA / UK',
+ lore:'Halloween was a divination night for centuries. A girl ate an apple in front of a candlelit mirror at midnight to see the face of her future husband, and the versions where she sees a skull instead are just as old as the romantic ones. That parlor game hardened into Bloody Mary, summoning by repetition in a dark bathroom. Rose moved the ritual to Cabrini-Green and asked what answers when American history is the thing looking back.',
+ alt:'Tales from the Hood (1995)'},
+{n:50,m:10,d:20,c:8,f:'The Blair Witch Project',y:1999,dir:'Myrick & Sánchez',co:'USA',
+ lore:'Folklorists call it legend tripping: driving out to the cursed bridge or the haunted woods at night to test the story on your own body. Teenagers have always done it and always will. The directors legend-tripped an entire country instead, with missing-person flyers, a fake documentary on cable, and cast members listed as deceased online. The forest turned out to be the internet.',
+ alt:'The Last Broadcast (1998)'},
+{n:51,m:10,d:21,c:8,f:'Black Christmas',y:1974,dir:'Bob Clark',co:'Canada',
+ lore:'The babysitter and the man upstairs is one of the most widely collected American legends, and the punchline is a phone company technician saying the calls are coming from inside the house. Clark gave the legend the grammar horror still uses: the killer\u2019s point of view, no motive offered, no capture, a young woman who survives without anybody rescuing her. Four years before Halloween. It is set at Christmas and the legend does not care what night it is.',
+ alt:'When a Stranger Calls (1979)'},
+{n:52,m:10,d:22,c:8,f:'Ringu',y:1998,dir:'Hideo Nakata',co:'Japan',
+ lore:'Sadako descends from Okiku of Banchō Sarayashiki, the servant thrown down a well who comes back counting plates forever. The other half is a chain letter: copy this and be spared, break the chain and die, a form circulating since the 1800s as "letters from heaven." A cursed videotape is a chain letter with a production budget, and the escape clause is unchanged. Somebody else has to receive it.',
+ alt:'Kairo (2001)'},
+{n:53,m:10,d:23,c:8,f:'It Follows',y:2014,dir:'David Robert Mitchell',co:'USA',
+ lore:'Teenage warnings travel as legend: the hookman on the car door, the boyfriend on the roof, the thing you catch from a stranger. They are all stories that punish leaving the house at night with somebody. Mitchell shoots suburban Detroit and treats 8 Mile like a boundary line in a folk tale, which locally is close to what it is. The curse is transmissible and everybody is a little ashamed of it, which is the oldest structure in the genre.',
+ alt:'The Ring (2002)'},
+{n:54,m:10,d:24,c:8,f:'The Fog',y:1980,dir:'John Carpenter',co:'USA',
+ lore:'The dark half of the year opens with a story told at a fire, and Carpenter starts the movie exactly there: an old sailor, driftwood burning, children leaning in, a pocket watch. Wrecking legends are real coastal folklore, the false light on the headland that walks a ship onto the rocks so the town can take the cargo. Historians find almost no evidence anybody ever actually did it. Every coastal town will tell you their ancestors did.',
+ alt:'Dead of Night (1945)'},
+
+{n:55,m:10,d:25,c:9,f:'Sleepy Hollow',y:1999,dir:'Tim Burton',co:'USA / Germany',
+ lore:'Irving published the Horseman in 1820, assembled out of the Irish dullahan, a headless rider whose calling of your name meant you were finished, plus German tales of a decapitated Hessian. Irving handed a very young country a Revolutionary War ghost, which is a polite way of saying the country was already haunted and needed somewhere to put it. Burton added the teeth and the tree.',
+ alt:'The Legend of Sleepy Hollow (1949)'},
+{n:56,m:10,d:26,c:9,f:'Pumpkinhead',y:1988,dir:'Stan Winston',co:'USA',
+ lore:'Stingy Jack tricked the Devil twice, got barred from heaven and hell both, and walks the roads with an ember in a hollowed turnip. Irish and Scottish carvers used turnips and beets, and the surviving examples are considerably uglier than anything sold at a pumpkin patch. America had pumpkins, which are enormous and soft and take a knife easily, so the tradition upgraded on arrival. Winston\u2019s demon is vengeance you summon and then cannot call back, which is Jack\u2019s whole problem too.',
+ alt:'Night of the Demons (1988)'},
+{n:57,m:10,d:27,c:9,f:'Night of the Living Dead',y:1968,dir:'George A. Romero',co:'USA',
+ lore:'The zombie is Haitian. The zombi is a person robbed of will and made to labor without end, which is slavery\u2019s afterimage, and it reached American screens through occupation-era travel books written by outsiders. Romero never uses the word; his script says ghouls. He shot around Pittsburgh with friends\u2019 money while the evening news ran the dead every night, and the country did the naming for him.',
+ alt:'I Walked with a Zombie (1943)'},
+{n:58,m:10,d:28,c:9,f:'Psycho',y:1960,dir:'Alfred Hitchcock',co:'USA',
+ lore:'Ed Gein was arrested in Plainfield, Wisconsin in November 1957, and what deputies found in the farmhouse rewired American horror permanently. Robert Bloch was living about 35 miles away and had Psycho written inside two years. The mother fixation and the exhumations are Gein. Norman\u2019s specifics are Bloch. One quiet man in one small town handed the genre three of its icons and never saw a single one of the movies.',
+ alt:'The Texas Chain Saw Massacre (1974)'},
+{n:59,m:10,d:29,c:9,f:'Halloween III: Season of the Witch',y:1982,dir:'Tommy Lee Wallace',co:'USA',
+ lore:'Guising came first. On Samhain you went out disguised so the wandering dead would take you for one of their own, and the mask was protection long before it was a costume. Wallace made the one Halloween film with no Michael in it: Celtic ritual, a stolen block of Stonehenge, masks that kill children on a broadcast signal. Audiences hated it in 1982 for the crime of not being a slasher. It is the only sequel that understood what the holiday actually is.',
+ alt:'Halloween II (1981)'},
+{n:60,m:10,d:30,c:9,f:'Trick \u2019r Treat',y:2007,dir:'Michael Dougherty',co:'USA',
+ mark:'Mischief Night, and in Detroit, Devil\u2019s Night. The vandalism tradition goes back to the 1930s, the arson escalated alongside the vacant housing, and 1984 was the worst of it: 810 fires logged across October 29 to 31. Volunteer patrols under the name Angels\u2019 Night eventually brought the numbers back to ordinary.',
+ lore:'Souling is the ancestor: the poor going door to door on the eve of All Souls, trading prayers for the dead in exchange for cakes. "Trick or treat" first shows up in print in 1927, in Blackie, Alberta. And the razor-blade panic rests on almost nothing. The case everybody is actually remembering is a Texas father who poisoned his own son\u2019s Pixy Stix in 1974 and blamed the neighborhood. Sam is there to enforce the rules. Honor them.',
+ alt:'The Crow (1994), which is set on Devil\u2019s Night and knows it'},
+
+{n:61,m:10,d:31,c:10,f:'Halloween',y:1978,dir:'John Carpenter',co:'USA',
+ mark:'Samhain. The Celtic year turns tonight: herds culled, harvest in, the boundary at its thinnest, the dead moving alongside the living for one night before the cold half takes over. Houdini died on this date in 1926.',
+ lore:'By the 1930s American Halloween pranking had gotten destructive enough that towns openly discussed banning the holiday, and organized trick-or-treating got promoted partly to buy the chaos off with candy. Carpenter shot for about 20 days on roughly 300,000 dollars. Michael\u2019s face is a Captain Kirk mask, eyes widened, painted white, bought for a couple of dollars. The film handed the holiday to horror permanently. He comes home tonight.',
+ alt:'Dealer\u2019s choice. You made it through 61 nights. Watch whatever you want.'}
+];
+
+/* ---------- storage ---------- */
+const mem={};
+const store={
+  get(k){try{const v=localStorage.getItem(k);return v?JSON.parse(v):mem[k];}catch(e){return mem[k];}},
+  set(k,v){mem[k]=v;try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
+};
+let opened=new Set(store.get('thin_opened')||[]);
+let watched=new Set(store.get('thin_watched')||[]);
+let notes=store.get('thin_notes')||{};
+let ritual=!!store.get('thin_ritual');
+
+/* ---------- dates ---------- */
+const MON=['','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+function today(){const t=new Date();t.setHours(0,0,0,0);return t;}
+function gateOf(e){const t=today();return new Date(t.getFullYear(),e.m-1,e.d);}
+function unlocked(e){return ritual||today()>=gateOf(e);}
+function isTonight(e){const t=today();return t.getMonth()===e.m-1&&t.getDate()===e.d;}
+function dstr(e){return MON[e.m]+' '+e.d;}
+function veilDays(){const t=today();return Math.round((new Date(t.getFullYear(),9,31)-t)/86400000);}
+
+/* ---------- render ---------- */
+function render(){
+  const main=document.getElementById('main');
+  main.innerHTML='';
+  let lastMonth=null;
+  CH.forEach(ch=>{
+    if(ch.m!==lastMonth){
+      const mr=document.createElement('div');
+      mr.className='month-rule';
+      mr.innerHTML='<span>'+ch.m+'</span>';
+      main.appendChild(mr);
+      lastMonth=ch.m;
+    }
+    const sec=document.createElement('section');
+    sec.className='chapter';
+    sec.style.setProperty('--acc',ch.acc);
+    sec.innerHTML='<div class="chapter-head"><span class="chapter-range">'+ch.range+
+      '</span><span class="chapter-title">'+ch.title+'</span></div>';
+    const grid=document.createElement('div');
+    grid.className='grid';
+    N.filter(e=>e.c===ch.id).forEach(e=>{
+      const ok=unlocked(e);
+      const b=document.createElement('button');
+      b.className='door '+(ok?'open':'locked')+(isTonight(e)?' tonight':'')+(e.mark?' marked':'');
+      b.setAttribute('aria-label',ok?dstr(e)+', night '+e.n+': '+e.f:dstr(e)+', still sealed');
+      let h='<span class="dt">'+dstr(e)+'</span><span class="num">'+e.n+'</span>';
+      h+=ok?'<span class="tag">'+(opened.has(e.n)?e.f:'<em>unopened</em>')+'</span>'
+           :'<span class="tag">sealed</span>';
+      if(e.mark)h+='<span class="sig">\u2726</span>';
+      if(watched.has(e.n))h+='<span class="stamp">🎃</span>';
+      b.innerHTML=h;
+      b.addEventListener('click',()=>ok?openNight(e.n):denied(b));
+      grid.appendChild(b);
+    });
+    sec.appendChild(grid);
+    main.appendChild(sec);
+  });
+  updateHeader();
+}
+
+function updateHeader(){
+  const dv=veilDays();
+  const pv=document.getElementById('pillVeil');
+  if(dv>1)pv.innerHTML='<b>'+dv+'</b> nights to the veil';
+  else if(dv===1)pv.innerHTML='<b>one</b> night remains';
+  else if(dv===0)pv.innerHTML='<b>the veil is open</b>';
+  else pv.innerHTML='the veil has closed';
+  document.getElementById('pillSeen').innerHTML='<b>'+watched.size+'</b> of 61 watched';
+  document.getElementById('barFill').style.width=(watched.size/61*100)+'%';
+
+  const card=document.getElementById('tonightCard');
+  const e=N.find(x=>isTonight(x));
+  if(e){
+    card.hidden=false;
+    card.style.setProperty('--acc',CH[e.c].acc);
+    card.innerHTML='<span class="k">Tonight · '+dstr(e)+' · Night '+e.n+'</span>'+
+      '<span class="t">'+e.f+'</span><span class="d">'+e.y+', dir. '+e.dir+'</span>';
+    card.onclick=()=>openNight(e.n);
+    return;
+  }
+  const next=N.find(x=>today()<gateOf(x));
+  if(next){
+    card.hidden=false;
+    card.style.setProperty('--acc',CH[next.c].acc);
+    card.innerHTML='<span class="k">The calendar opens '+dstr(next)+'</span>'+
+      '<span class="t">Night 1 waits</span>'+
+      '<span class="d">61 nights, September 1 through Halloween. Nothing opens early without asking.</span>';
+    card.onclick=()=>toast('Not yet. The calendar is patient.');
+  } else {
+    card.hidden=true;
+  }
+}
+
+function denied(b){
+  b.classList.remove('shake');void b.offsetWidth;b.classList.add('shake');
+  toast('Not yet. The calendar is patient.');
+}
+
+/* ---------- modal ---------- */
+let cur=null;
+const veil=document.getElementById('veil');
+function openNight(n){
+  cur=n;
+  const e=N.find(x=>x.n===n);
+  opened.add(n);store.set('thin_opened',[...opened]);
+  document.getElementById('cardBox').style.setProperty('--acc',CH[e.c].acc);
+  document.getElementById('cardKicker').textContent=dstr(e)+' · Night '+e.n+' of 61 · '+CH[e.c].title;
+  document.getElementById('cardTitle').textContent=e.f;
+  document.getElementById('cardCredits').textContent=e.y+' · dir. '+e.dir+' · '+e.co;
+  const al=document.getElementById('cardAlmanac');
+  if(e.mark){al.hidden=false;al.textContent=e.mark;}else{al.hidden=true;}
+  document.getElementById('cardLore').textContent=e.lore;
+  document.getElementById('cardAlt').innerHTML='<em>Double bill:</em> '+e.alt;
+  document.getElementById('cardNotes').value=notes[n]||'';
+  syncWatch();
+  veil.classList.add('show');
+  render();
+}
+function syncWatch(){
+  const b=document.getElementById('watchBtn');
+  if(watched.has(cur)){b.textContent='Watched ✓';b.classList.add('done');}
+  else{b.textContent='Mark watched';b.classList.remove('done');}
+}
+document.getElementById('watchBtn').addEventListener('click',()=>{
+  watched.has(cur)?watched.delete(cur):watched.add(cur);
+  store.set('thin_watched',[...watched]);syncWatch();render();
+});
+document.getElementById('cardNotes').addEventListener('input',ev=>{
+  notes[cur]=ev.target.value;store.set('thin_notes',notes);
+});
+function closeVeil(){veil.classList.remove('show');}
+document.getElementById('closeBtn').addEventListener('click',closeVeil);
+veil.addEventListener('click',e=>{if(e.target===veil)closeVeil();});
+
+/* ---------- ritual ---------- */
+let taps=0,tapTimer=null;
+const rv=document.getElementById('ritualVeil');
+document.getElementById('moon').addEventListener('click',()=>{
+  taps++;clearTimeout(tapTimer);tapTimer=setTimeout(()=>taps=0,1600);
+  if(taps>=6){
+    taps=0;
+    if(ritual){toast('The old name has already been spoken.');return;}
+    rv.classList.add('show');
+    setTimeout(()=>document.getElementById('ritualInput').focus(),100);
+  }
+});
+function attempt(){
+  const v=document.getElementById('ritualInput').value.trim().toLowerCase();
+  if(v==='samhain'){
+    ritual=true;store.set('thin_ritual',true);
+    rv.classList.remove('show');
+    toast('Every door remembers its true night. All are open.');
+    render();
+  } else {
+    document.getElementById('ritualInput').value='';
+    toast('The moon does not recognize that name.');
+  }
+}
+document.getElementById('ritualSpeak').addEventListener('click',attempt);
+document.getElementById('ritualInput').addEventListener('keydown',e=>{if(e.key==='Enter')attempt();});
+document.getElementById('ritualClose').addEventListener('click',()=>rv.classList.remove('show'));
+rv.addEventListener('click',e=>{if(e.target===rv)rv.classList.remove('show');});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeVeil();rv.classList.remove('show');}});
+
+/* ---------- toast ---------- */
+let tt=null;
+function toast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('show'),2600);
+}
+
+render();
+</script>
+</body>
+</html>
